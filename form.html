@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title> Form task </title>
+</head>
+
+<body>
+
+    <form method="post" action="./form.php">
+        <label for="Subject"> Име на предмета: </label>
+        <input type="text" id="Subject title" name="title" require>
+        <br>
+        <label for="Teacher"> Преподавател: </label>
+        <input type="text" id="Teacher" name="teacher" require>
+        <br>
+        <label for="Description"> Описание: </label>
+        <input type="text" id="Description" name="description" require>
+        <br>
+        <label for="group">Група: </label>
+        <br>
+        <select id="group" name="group">
+            <option value="М"> Математика</option>
+            <option value="PМ"> Приложна математика </option>
+            <option value="OKN"> ОКН </option>
+            <option value="QKN"> ЯКН </option>
+        </select>
+        <br>
+        <label for="Credits"> Кредити: </label>
+        <input type="number" id="Credits" name="credits" min="1">
+        <br>
+        <br>
+        <input type="submit" value="submit">
+    </form>
+
+</body>
+
+</html>

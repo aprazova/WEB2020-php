@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <script src="regForm.js"></script>
+    <title>Registration Form</title>
+</head>
+
+<body>
+
+    <form action="regForm.php" method="POST" onsubmit="return validate()">
+        <fieldset class="fieldset-container">
+            
+            <legend> Registration form </legend>
+
+            <div class="input-container">
+                <label for="username">Username:</label>
+                <input type="text" 
+                       id="username"
+                       minlength="3"
+                       maxlength="10"
+                       required
+                       pattern="[\w_]+"
+                       placeholder="Enter a username"
+                       title=" The username must contain 3 to 10 characters (letters, numbers and _ ).">
+                       
+                <lebel id="usernameError"></lebel>
+                 
+            </div>
+            
+            <div class="input-container">
+                <label for="password">Password: </label>
+                <input type="password" 
+                       id="password"
+                       placeholder="Enter a password"
+                       minlength="6"
+                       required
+                       title="The password must be at least 6 characters, including uppercase, lowercase, and number.">
+           
+                <lebel id="passwordError"></lebel>
+  
+            </div>
+
+            <div class="input-container">
+                <label for="validatePassword">Validate password: </label>
+                <input type="password" 
+                       id="validatePassword"
+                       required
+                       placeholder="Validate password">    
+                
+                <label id="validatePasswordError"></lebal>    
+            
+            </div>
+            
+            <label id="msg"></label>
+
+            <input type="submit" value="Submit">
+
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

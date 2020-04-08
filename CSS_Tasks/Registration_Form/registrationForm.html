@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <title>Registration Form</title>
+    <link href="formStyle.css" rel="stylesheet">
+</head>
+
+<body>
+    <form class="registration">  
+
+        <legend> Регистрация </legend>
+
+        <div class="input-container">
+            <input type="email" 
+                    id="username"
+                    required
+                    placeholder="E-mail">             
+        </div>
+
+        <div class="input-container">
+            <input type="text" 
+                    id="firstName"
+                    required
+                    pattern="[\w]+"
+                    placeholder="Име"
+                    title=" The username must contain 3 to 10 characters (letters, numbers and _ ).">             
+        </div>
+
+        <div class="input-container">
+            <input type="text" 
+                    id="lastName"
+                    required
+                    pattern="[\w]+"
+                    placeholder="Фамилия"
+                    title=" The username must contain 3 to 10 characters (letters, numbers and _ ).">             
+        </div>
+        
+        <div class="input-container">
+            <input type="password" 
+                    id="password"
+                    placeholder="Парола"
+                    minlength="6"
+                    required
+                    title="The password must be at least 6 characters, including uppercase, lowercase, and number.">
+        </div>
+
+        <div class="input-container">
+            <input type="password" 
+                    id="confirmPassword"
+                    required
+                    placeholder="Повтори паролата">                   
+        </div>
+        
+        <button type="submit"> Регистрация </button>
+    </form>
+</body>
+
+</html>

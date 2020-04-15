@@ -1,6 +1,6 @@
 <?php
 
-    Include "./db_manipulation.php";
+    include "./db_manipulation.php";
 
     function validateField(String $text, int $size, &$valid, &$errors){
         $tmp = $_POST["$text"];
@@ -19,7 +19,6 @@
     define("MAX_LENGTH_TITLE", 128);
     define("MAX_LENGTH_LECTURER", 128);
     define("MAX_LENGTH_DESCRIPTION", 1024);
-    define("COUNT_FIELDS", 3);
     
     if( $_POST ){
         
@@ -28,14 +27,17 @@
 
         validateField('description',MAX_LENGTH_DESCRIPTION, $valid, $errors);
 
-        if(count($valid) == COUNT_FIELDS){
+        if(count($errors) == 0 ){
 
             $title = $_POST['title'];
             $lecturer = $_POST['teacher'];
             $description = $_POST['description'];
 
-            insert($title, $description, $lecturer);
-        } 
+            insertInTable($title, $description, $lecturer);
+            printContentOfTable();
+        } else {
+            echo "The data was not save. Please fill in the fields in accordance with the following requirements: Subject - maximum of 128 characters, Lecturer - maximum of 128 characters, Description: maximum of 1024 characters.";
+        }
     }
 
 ?>

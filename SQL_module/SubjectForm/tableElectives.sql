@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `university` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `universitySystem` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `universitySystem`;
 
 CREATE TABLE electives (

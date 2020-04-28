@@ -6,19 +6,51 @@
 <body>
 <a href="index.php"> Take me home, country roads ... </a> <br>
 <?php
+
 include "db-connection.php";
+
+function getHashedPassword($conn, $email){
+
+    $sqlQueryForPassword = "SELECT password FROM person WHERE email = :email;";
+
+    $getHashedPassword = $conn->prepare($sqlQueryForPassword);
+    $getHashedPassword->bindParam(':email', $email);
+    $getHashedPassword->execute() or die ("Not valid credentials.");
+
+    $result = $getHashedPassword->fetch(PDO::FETCH_BOTH);
+    $hashedPassword = $result['password'];
+
+    return $hashedPassword;
+}
+
 $conn = openCon();
 
-$sql = "SELECT * from person where email = '" . htmlentities($_POST["email"]) . "' and password = '" . htmlentities($_POST["password"]) . "';";
+$email = htmlentities($_POST["email"]);
+$password = htmlentities($_POST["password"]);
 
-$resultSet = $conn->query($sql) or die("Failed to query from DB!");
+$hashedPassword = getHashedPassword($conn, $email);
 
-$firstrow = $resultSet->fetch(PDO::FETCH_ASSOC) or die ("Not valid credentials.");
+if (!isset($hashedPassword)) {
+    die("Not valid credentials.");
+}
 
-echo("Hello " . $firstrow['firstname'] . " you are now logged in.");
+if(password_verify($password, $hashedPassword)){
 
-session_start();
-$_SESSION["email"] = $firstrow['email'];
+    $sql = "SELECT * from person WHERE email = :email;";
+
+    $resultSet = $conn->prepare($sql);
+    $resultSet->bindParam(':email', $email);
+    $resultSet->execute() or die("Failed to query from DB!");
+    $firstrow = $resultSet->fetch(PDO::FETCH_ASSOC) or die ("Not valid credentials.");
+
+    echo("Hello " . $firstrow['firstname'] . " you are now logged in.");
+
+    session_start();
+    $_SESSION["email"] = $firstrow['email'];
+
+} else {
+    echo("Not valid credentials.");
+}
 
 ?>
 </body>

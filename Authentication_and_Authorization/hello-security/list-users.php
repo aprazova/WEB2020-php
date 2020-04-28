@@ -6,22 +6,43 @@
 <body>
 <a href="index.php"> Take me home, country roads ... </a> <br>
 <?php
+
+include "db-connection.php";
+
+function checkIfRoleIsAdmin($email){
+    
+    $conn = openCon();
+
+    $sql = "SELECT * from person where email = :email;";
+    $resultSet = $conn->prepare($sql);
+
+    $resultSet->bindParam(':email', $email);
+
+    $resultSet->execute() or die("Failed to query from DB!");;
+    $firstrow = $resultSet->fetch(PDO::FETCH_ASSOC);
+    
+    $admin = "admin";
+    $role = $firstrow['role'];
+
+    return strcmp($role, $admin);
+}
+
 session_start();
+
 if (!isset($_SESSION["email"])) {
     die("Only authenticated users are allowed");
 }
 
-include "db-connection.php";
+$email= $_SESSION["email"];
+if (checkIfRoleIsAdmin($email)) {
+    die("No permissions.");
+}
+
 $conn = openCon();
-
-$sql = "SELECT * from person where email = '" . $_SESSION["email"] . "';";
-$resultSet = $conn->query($sql) or die("Failed to query from DB!");
-$firstrow = $resultSet->fetch(PDO::FETCH_ASSOC) or die ("User not found.");
-
 $sql = "SELECT * from person;";
 
 $resultSet = $conn->prepare($sql);
-$resultSet->execute();
+$resultSet->execute() or die("Failed to list all users.");
 
 echo("The users in the system are: <br>");
 while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) {

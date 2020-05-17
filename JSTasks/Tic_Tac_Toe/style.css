@@ -1,0 +1,71 @@
+.title {
+    text-align: center;
+    color: blueviolet;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.game {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 450px;
+    height: 105px;
+}
+
+.cell {
+    width: 33.3%;
+    border: 2px solid blueviolet;
+    cursor: pointer;
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+#reset_button {
+    display: flex;
+    width: 100px;
+    margin-top: 30px;
+}
+
+.cell img {
+    width: 150px;
+    height: 100px;
+}
+
+.button {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.button input[type=button] {
+    width: 100px;
+    height: 45px;
+    border-radius: 6px;
+    background-color: blueviolet;
+    font-weight: bold;
+    color: white;
+}
+
+.button input[type=button]:hover {
+    background-color: white;
+    border: 1px solid blueviolet;
+    color: blueviolet;
+    cursor: pointer;
+}
+
+#error_msg {
+    margin-left: 10px;
+    font-weight: bold;
+    color: red;
+}

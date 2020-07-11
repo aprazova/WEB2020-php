@@ -1,7 +1,7 @@
 const x_image_path = "./images/x_image.png";
 const o_image_path = "./images/o_image.png";
 const background_image = "./images/white_background.png";
-const error_msg_id = "error_msg";
+const msg_id = "msg";
 const player_symbol = "x";
 const bot_symbol = "o";
 const restart_id = "restart_button";
@@ -19,6 +19,12 @@ let cells = [
     ["", "", ""],
     ["", "", ""]
 ];
+
+let scores = {
+    player_symbol: -1,
+    bot_symbol: 1,
+    none: 0
+}
 
 for (let i = 0; i < max_row; i++) {
     for (let j = 0; j < max_col; j++) {
@@ -40,10 +46,15 @@ document.getElementById(restart_id).addEventListener("click", function() {
 function add_move(i, j) {
     document.getElementById(cells_id[i][j]).addEventListener("click", function() {
 
-        document.getElementById(error_msg_id).innerText = "";
+        document.getElementById(msg_id).innerText = "";
+
+        if (!check_free_cell()) {
+            document.getElementById(msg_id).innerText = "Game over!";
+            return;
+        }
 
         if (cells[i][j] !== "") {
-            document.getElementById(error_msg_id).innerText = "Please, select valid cell.";
+            document.getElementById(msg_id).innerText = "Please, select valid cell.";
             return;
         }
         cells[i][j] = player_symbol;
@@ -52,12 +63,16 @@ function add_move(i, j) {
         let winner = check_for_winner();
         if (winner) {
             if (winner === player_symbol) {
-                alert("Congratulations! You win.");
+                document.getElementById(msg_id).innerText = "Congratulations! You win.";
+                lock_all_cells();
+
             } else if (winner === bot_symbol) {
-                alert("Sorry! You lost.");
+                document.getElementById(msg_id).innerText = "Sorry! You lost.";
+                lock_all_cells();
             }
         } else if (winner === null) {
-            alert("Game over!");
+            document.getElementById(msg_id).innerText = "Game over!";
+            lock_all_cells();
         } else {
             const move = move_bot();
             const row = move.i;
@@ -66,10 +81,32 @@ function add_move(i, j) {
             document.getElementById(cells_id[row][col]).src = o_image_path;
             winner = check_for_winner();
             if (winner && winner === bot_symbol) {
-                alert("Sorry! You lost.");
+                document.getElementById(msg_id).innerText = "Sorry! You lost.";
+                lock_all_cells();
             }
         }
     });
+}
+
+function lock_all_cells() {
+    for (let i = 0; i < max_row; i++) {
+        for (let j = 0; j < max_col; j++) {
+            if (cells[i][j] === "") {
+                cells[i][j] = "lock";
+            }
+        }
+    }
+}
+
+function check_free_cell() {
+    for (let i = 0; i < max_row; i++) {
+        for (let j = 0; j < max_col; j++) {
+            if (cells[i][j] === "") {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function check_for_winner() {
@@ -137,12 +174,6 @@ function move_bot() {
     }
 }
 
-let scores = {
-    player_symbol: -1,
-    bot_symbol: 1,
-    none: 0
-}
-
 function minimax(cells, depth, minimazing) {
     let winner = check_for_winner();
     if (winner || winner === null) {
@@ -157,7 +188,7 @@ function minimax(cells, depth, minimazing) {
     }
 
     if (minimazing) {
-        bestScore = -Infinity;
+        let bestScore = -Infinity;
         for (let i = 0; i < max_row; i++) {
             for (let j = 0; j < max_col; j++) {
 

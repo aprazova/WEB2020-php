@@ -44,6 +44,9 @@
 }
 
 .button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -68,4 +71,14 @@
     margin-left: 10px;
     font-weight: bold;
     color: red;
+}
+
+.button span {
+    color: blueviolet;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+*:focus {
+    outline: none;
 }
